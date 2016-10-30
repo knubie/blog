@@ -1,0 +1,144 @@
+@font-face {
+  font-family: 'Atlas Typewriter';
+  src: url('../fonts/AtlasTypewriter-Regular-Web.eot');
+  src: url('../fonts/AtlasTypewriter-Regular-Web.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/AtlasTypewriter-Regular-Web.woff') format('woff'),
+  url('../fonts/AtlasTypewriter-Regular-Web.ttf') format('truetype'),
+  url('../fonts/AtlasTypewriter-Regular-Web.svg#AtlasTypewriter-Regular') format('svg');
+  font-weight:  400;
+  font-style:   normal;
+  font-stretch: normal;
+}
+@font-face {
+  font-family: 'Atlas Typewriter';
+  src: url('../fonts/AtlasTypewriter-Medium-Web.eot');
+  src: url('../fonts/AtlasTypewriter-Medium-Web.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/AtlasTypewriter-Medium-Web.woff') format('woff'),
+  url('../fonts/AtlasTypewriter-Medium-Web.ttf') format('truetype'),
+  url('../fonts/AtlasTypewriter-Medium-Web.svg#AtlasTypewriter-Medium') format('svg');
+  font-weight:  500;
+  font-style:   normal;
+  font-stretch: normal;
+}
+
+body {
+  font-family: 'Atlas Typewriter';
+  color: #eee;
+  background-color: #111;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /*background-image: url(http://fat.gfycat.com/CarefreeRadiantGazelle.gif);*/
+  /*background-size: 50px;*/
+}
+h1 {
+  word-wrap: break-word;
+}
+pre, h1 {
+  -webkit-column-break-inside: avoid;
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+p { margin: 0 0 20px 0; }
+hr {
+  border-top: 1px solid #333;
+}
+a:link, a:visited {
+  color: #777;
+  transition: all .1s;
+  box-sizing: border-box;
+  /*border-bottom: 2px solid transparent;*/
+  /*text-shadow: -1px -1px 0 #111,1px -1px 0 #111,-1px 1px 0 #111,1px 1px 0 #111;*/
+  /*background-image: linear-gradient(to bottom,#111 85%, #111 80%);*/
+  /*line-height: 1em;*/
+  /*margin-bottom: .25em;*/
+}
+a:hover {
+  text-decoration: none;
+  color: #888;
+  background-color: #222;
+  /*transform: translateY(-2px);*/
+  /*border-bottom: 2px solid #222;*/
+  /*background-image: linear-gradient(to bottom, #111 85%, #222 80%);*/
+}
+blockquote {
+  border: none;
+}
+pre, code {
+  background-color: #1A1A1A;
+  border: none;
+  color: #999;
+  font-size: 11px;
+  margin: 0 0 30px 0;
+}
+pre .glyphicon-star, code .glyphicon-star {
+  font-size: 10px;
+  margin-right: 1px;
+}
+.newspaper {
+  -webkit-column-width: 360px;
+     -moz-column-width: 360px;
+
+  -webkit-column-gap: 30px;
+     -moz-column-gap: 30px;
+
+  -moz-column-fill: auto;
+       column-fill: auto;
+  max-width: 810px;
+  padding: 30px;
+}
+@media (min-width: 810px) {
+  .newspaper {
+    height: 100vh;
+  }
+}
+.modal-dialog {
+  margin-top: 40vh;
+  transform: translateY(-50%);
+}
+.modal-backdrop {
+  opacity: .65 !important;
+  cursor: pointer;
+}
+.modal-backdrop:hover {
+  cursor: pointer;
+}
+.modal-content {
+  background-color: #880000;
+  border-radius: 0;
+  padding: 5px;
+}
+.modal-content p {
+  margin: 0;
+  border: 2px solid #770000;
+  padding: 20px;
+}
+.modal-content a {
+  color: white;
+  border-bottom: 1px solid white;
+}
+.modal-content a:hover {
+  background-color: #550000;
+}
+/*h1, hr {*/
+  /*-webkit-column-span: all;*/
+/*}*/
+.marquee {
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.marquee > span {
+  display: inline-block;
+  padding-left: 100%;  /* show the marquee just outside the paragraph */
+  animation: marquee 15s linear infinite;
+}
+
+.marquee span:hover {
+  animation-play-state: paused
+}
+
+/* Make it move */
+@keyframes marquee {
+  0%   { transform: translate(0, 0); }
+  100% { transform: translate(-100%, 0); }
+}

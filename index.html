@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Matt's Blog</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png" sizes="16x16">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="modal" id="alert">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <p><strong>WARNING</strong>: This browser is not supported. See: <a href="https://code.google.com/p/chromium/issues/detail?id=527709" target="_blank">Issue 527709</a>.</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div>
+        <div class="newspaper">
+          <p></p>
+          <ul class="list-inline">
+            <li><b>affiliates: </b></li>
+            <li><a href="../billy">billy</a></li>
+            <li><a href="../sydney">sydney</a></li>
+          </ul>
+          <hr>
+          <h1>Using Google sheets as a database.<br><small>-270782.041</small></h1>
+          <marquee>
+          <code>#google-docs</code>
+          <code>#spreadsheets</code>
+          <code>#database</code>
+          <code>#javascript</code>
+          </marquee>
+          <hr>
+          <p>A lot of times when you're building a static website it's easier to just copy and past content in as the project progress than to bother setting up a full on database. Most digital agencies use some kind of 'content matrix', which is just a fancy word for spreadshet, to keep track of all this content. The problem is most of the time this content changes while development is in progress. Content gets out of a sync, the developer wastes time copying and pasting, and human errors occur.</p>
+          <blockquote><footer>Matt</footer></blockquote>
+          <hr>
+          <h1>Running your own Slack clone with IRC. ½<br><small>-270782.041</small></h1>
+          <marquee>
+            <code>#slack</code>
+            <code>#irc</code>
+            <code>#shout-irc</code>
+            <code>#hector</code>
+            <code>#fluid</code>
+            <code>#ruby</code>
+            <code>#javascript</code>
+          </marquee>
+          <hr>
+          <p><a href="https://slack.com/" target="_blank">Slack</a> is pretty cool, but it's basically just IRC with a slick interface and some other nice features built-in. It's always been possible to get most of these features with IRC, but it's usually convoluted to set up and technically involved. For example, users looking for a persistent connection would traditionally run a command line IRC client on some remote server and ssh in to use it, or set up a BNC service which we won't even get into here.</p>
+          <h3>The server.</h3>
+          <p>Setting up the back-end is pretty straight forward, we just need an IRC server. <a href="https://github.com/sstephenson/hector" target="_blank">Hector</a> works pretty well for that and is easy to set up. If you're looking for something fully featured, there are dozens of different IRC servers that implement the full RFC and then some. I also have my own <a href="https://github.com/knubie/hector" target="_blank">fork of hector</a> that adds some features like ops, and channel modes.</p>
+          <h3>The client.</h3>
+          <p>Thanks to <a href="http://shout-irc.com/" target="_blank">Shout</a> we can get two of Slack's best features for free, a persistent connection, and a slick interface.</p>
+          <p>Shout is a browser-based IRC client that installs on a remote server. Once you create a user and log in you've got yourself a persistent connection that'll stay connected to the IRC server even after you've closed the window.</p>
+          <p>Once you've got Shout set up and running on your server, you can turn the browser client into a desktop app with <a href="http://fluidapp.com/" target="_blank">Fluid</a>.</p>
+          <h3>Deficiencies.</h3>
+          <p>There are still a few key features missing from this combo; online status, file uploads, code snippets, etc. Some of these are actually in development for Shout at the time of this writing, others could also be added without too much dificulty as well. I'll get more into the deficiencies and ways around them in part two of this post.</p>
+          <blockquote><footer>Matt</footer></blockquote>
+          <hr>
+          <h1>Using NGINX to run multiple web servers with Docker.<br><small>-270793.973</small></h1>
+          <marquee>
+            <code>#nginx</code>
+            <code>#docker</code>
+            <code>#docker-gen</code>
+            <code>#linux-containers</code>
+            <code>#reverse-proxy</code>
+          </marquee>
+          <hr>
+          <p>It's pretty straight forward to run a web server in Docker. Just expose port 80, or whichever you prefer, and load up the host machine's IP address in a web browser.</p>
+          <pre>$ docker run -d --name node-app -p 80:80 -v "$PWD":/usr/src/myapp node:0.10 node /usr/src/myapp/app.js</pre>
+          <p>But if you're running multiple web apps with Docker you'll need a way to map the incoming requests to your server to the appropriate docker container. That's where Nginx's reverse proxy comes in.</p>
+          <p>First you'll need to find the IP adress of the container running the web server.</p>
+          <pre>$ docker inspect node-app | grep IPAddress</pre>
+          <p>Now we can just plug the IP address into our Nginx configuration, and either map it to a new hostname.</p>
+          <pre>upstream node_app {
+  server 172.17.0.1:80;
+}
+
+server {
+
+  server_name my-node-app.com;
+
+  location / {
+    proxy_pass http://node_app;
+  }
+}</pre>
+          <p>Or, alternatively we could drop the <code>server_name</code> directive, and route it to some alternate path on the parent context's hostname.</p>
+          <pre>upstream node_app {
+  server 172.17.0.1:80;
+}
+
+server {
+  location /node-app/ {
+    proxy_pass http://node_app;
+  }
+}</pre>
+          <p>This technique works, however it can be cumbersome to manually update the Nginx configuration every time you stop/start a container with its new IP address. Thanks to <a href="https://github.com/jwilder" target="_blank">jwilder</a>, however, there's an incredibly useful tool called <a href="https://github.com/jwilder/docker-gen" target="_blank">docker-gen</a> which can be used to automatically generate configuration files (in addition to any other kind of text file) every time a docker container is run. He's even got an <a href="https://github.com/jwilder/nginx-proxy" target="_blank">Nginx reverse-proxy demo</a> demonstrating this exact use-case.</p>
+          <blockquote><footer>Matt</footer></blockquote>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
